@@ -1,10 +1,14 @@
 <html>
 	<head>
 		<title>Система</title>
-		<script defer src='script.js'></script>
-		<script src='plot.js'></script>
+		<script defer src='plot.js'></script>
 	</head>
 	<body>
-		
+		dt = <input id='dt'></input><br>
+		n = <input id='n'></input><br>
+		a = <input id='a'></input><br>
+		x0 = <input id='x0'></input>; y0 = <input id='y0'></input>
+		<br><button onclick='build(a.value,dt.value,n.value,x0.value,y0.value)'>ГРАФИК</button>
+		<div id='d'></div>
 	</body>
 </html>
