@@ -130,6 +130,9 @@ class Oxy {
 		this.ctx.closePath();
 		this.ctx.fill();
 	}
+	inCanvas(x,y) {
+		return (x>0)&&(x<this.size)&&(y>0)&&(y<this.size);
+	}
 	plot(points,style) {
 		var style_default = {
 			color: 'blue'
@@ -144,8 +147,16 @@ class Oxy {
 		else {
 			style = JSON.parse(JSON.stringify(style_default));
 		}
-		var x = JSON.parse(JSON.stringify(points.x));
-		var y = JSON.parse(JSON.stringify(points.y));
+		var x_ = JSON.parse(JSON.stringify(points.x));
+		var y_ = JSON.parse(JSON.stringify(points.y));
+		var x = [];
+		var y = [];
+		for(var i in x_) {
+			if(isFinite(x_[i])&&isFinite(y_[i])) {
+				x.push(x_[i]);
+				y.push(y_[i]);
+			}
+		}
 		this.point(x[0],y[0],{color: style.color,radius:2});
 		this.point(x[x.length-1],y[y.length-1],{color: style.color,radius:2});
 		for(var i in x) {
@@ -154,11 +165,22 @@ class Oxy {
 		for(var i in y) {
 			y[i] = Math.round(this.size*(-y[i]/this.y_axis.length+1)/2);
 		}
+		for(var i in x) {
+			if(!this.inCanvas(x[i],y[i])) {
+				x[i] = -1;
+				y[i] = -1;
+			}
+		}
 		this.ctx.strokeStyle = style.color;
 		this.ctx.beginPath();
 		this.ctx.moveTo(x[0],y[0]);
 		for(var i = 1; i<x.length; i++) {
-			this.ctx.lineTo(x[i],y[i]);
+			if(this.inCanvas(x[i],y[i])&&this.inCanvas(x[i-1],y[i-1])) {
+				this.ctx.lineTo(x[i],y[i]);
+			}
+			else {
+				this.ctx.moveTo(x[i],y[i]);
+			}
 		}
 		this.ctx.moveTo(x[0],y[0]);
 		this.ctx.closePath();
