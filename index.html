@@ -2,13 +2,16 @@
 	<head>
 		<title>Система</title>
 		<script defer src='plot.js'></script>
+		<script defer src='script.js'></script>
 	</head>
 	<body>
 		dt = <input id='dt'></input><br>
 		n = <input id='n'></input><br>
 		a = <input id='a'></input><br>
-		x0 = <input id='x0'></input>; y0 = <input id='y0'></input>
+		x0 = <input id='x0'></input>; y0 = <input id='y0'></input><br>
+		Размер системы координат:<input value='500' id='size'></input><br>
+		Длина осей:<input value='2' id='length'></input><br>
 		<br><button onclick='build(a.value,dt.value,n.value,x0.value,y0.value)'>ГРАФИК</button>
-		<div id='d'></div>
+		<div id='graph'></div>
 	</body>
 </html>

@@ -18,7 +18,26 @@
 	}
 	oxy.point(x,y)
 */
-class oxy {
+console.log(`
+	var oxy = new Oxy(x axis, y axis).create(div_id,cvs_id,size);
+	t_axis = {
+		name: 't', // default ''
+		length: 10, // length from 0 to end, default 10
+		thickness: 2, // default 2
+		color: black // default
+	}
+	oxy.plot(points, style);
+	style = {
+		thickness: 2,
+		color: blue
+	}
+	points = {
+		x = [x0, x1, ..., xn],
+		y = [y0, y1, ..., yn]
+	}
+	oxy.point(x,y)
+`)
+class Oxy {
 	constructor(x_axis,y_axis) {
 		this.x_axis = {
 			name: 'x',
@@ -77,7 +96,7 @@ class oxy {
 		this.ctx.closePath();
 		this.ctx.stroke();
 		this.ctx.beginPath();
-		this.ctx.moveTo(size/2,0); console.log(this.y_axis)
+		this.ctx.moveTo(size/2,0);
 		this.ctx.lineTo(size/2-
 			Math.round(this.y_axis.arrow_length/this.y_axis.arrow_angle_ctg),
 				this.y_axis.arrow_length);
@@ -89,20 +108,60 @@ class oxy {
 		this.ctx.fill();
 	}
 	point(x,y,style) {
-		if(arguments.length==2) {
-			style = {
-				raduis: this.size/Math.min(this.x_axis.length,this.y_axis.length)/10,
-				color: 'blue'
-			};
+		var style_default = {
+			radius: 5,
+			color: 'blue'
+		};
+		if(arguments.length==3) {
+			for(var key in style_default) {
+				if(!(key in style)) {
+					style[key] = style_default[key];
+				}
+			}
 		}
+		else {
+			style = JSON.parse(JSON.stringify(style_default));
+		}
+		x = this.size*(x/this.x_axis.length+1)/2;
+		y = this.size*(-y/this.y_axis.length+1)/2;
 		this.ctx.fillStyle = style.color;
 		this.ctx.beginPath();
 		this.ctx.arc(x,y,style.radius,0,Math.PI*2,false);
 		this.ctx.closePath();
 		this.ctx.fill();
 	}
+	plot(points,style) {
+		var style_default = {
+			color: 'blue'
+		};
+		if(arguments.length==2) {
+			for(var key in style_default) {
+				if(!(key in style)) {
+					style[key] = style_default[key];
+				}
+			}
+		}
+		else {
+			style = JSON.parse(JSON.stringify(style_default));
+		}
+		var x = JSON.parse(JSON.stringify(points.x));
+		var y = JSON.parse(JSON.stringify(points.y));
+		this.point(x[0],y[0],{color: style.color,radius:2});
+		this.point(x[x.length-1],y[y.length-1],{color: style.color,radius:2});
+		for(var i in x) {
+			x[i] = Math.round(this.size*(x[i]/this.x_axis.length+1)/2);
+		}
+		for(var i in y) {
+			y[i] = Math.round(this.size*(-y[i]/this.y_axis.length+1)/2);
+		}
+		this.ctx.strokeStyle = style.color;
+		this.ctx.beginPath();
+		this.ctx.moveTo(x[0],y[0]);
+		for(var i = 1; i<x.length; i++) {
+			this.ctx.lineTo(x[i],y[i]);
+		}
+		this.ctx.moveTo(x[0],y[0]);
+		this.ctx.closePath();
+		this.ctx.stroke();
+	}
 }
-
-var oxy1 = new oxy({},{});
-oxy1.create('d','cvs',1000);
-oxy1.point(10,10,{radius:10,color:'red'});
