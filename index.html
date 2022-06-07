@@ -5,14 +5,15 @@
 		<script defer src='script.js'></script>
 	</head>
 	<body>
-		dt = <input id='dt'></input><br>
-		n = <input id='n'></input><br>
+		dt = <input id='dt' value="0.001"></input><br>
+		n = <input id='n' value="1000000"></input><br>
 		a = <input id='a'></input><br>
-		x0 = <input id='x0'></input>; y0 = <input id='y0'></input><br>
+		x0 = <input id='x0' value="0"></input>; y0 = <input id='y0' value="0.5"></input><br>
 		Размер системы координат:<input value='500' id='size'></input><br>
-		Длина осей:<input value='2' id='length'></input><br>
-		<br><button onclick='build(a.value,dt.value,n.value,x0.value,y0.value,0)'>Система 1</button>
-		<button onclick='build(a.value,dt.value,n.value,x0.value,y0.value,1)'>Система 2</button>
+		Длина осей:<input value='1' id='length'></input><br>
+		<br><button onclick='build1(a.value,dt.value,n.value,x0.value,y0.value,0)'>Система 1</button>
+		<button onclick='build1(a.value,dt.value,n.value,x0.value,y0.value,1)'>Система 2</button>
+		<br><br><br>
 		<div id='graph'></div>
 	</body>
 </html>

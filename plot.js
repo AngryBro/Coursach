@@ -1,5 +1,5 @@
 /*
-Синтаксис:
+Sample:
 	var oxy = new oxy(x axis, y axis).create(div_id,cvs_id,size);
 	t_axis = {
 		name: 't', // default ''
