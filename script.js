@@ -65,7 +65,7 @@ function build1(a,dt,n,start_x,start_y,cases) {
 }
 
 function build(cases) {
-	cases = 0;
+	cases = 1;
 	for(var i in arguments) {
 		arguments[i] = Number(arguments[i]);
 	}
@@ -76,7 +76,7 @@ function build(cases) {
 	var oxy = new Oxy({length:len},{length:len});
 	oxy.create('graph','cvs',size);
 	oxy.plot(points);
-	var da = 0.0001;
+	var da = 0.001;
 	if(flag) {
 		a-=da;
 	}
@@ -88,17 +88,17 @@ function build(cases) {
 	}
 }
 
-// var a,dt,n,start_x,start_y,flag = true;
+var a,dt,n,start_x,start_y,flag = true;
 
-// a = -0.1;
-// dt = 0.001;
-// n = 100000;
-// start_x = 0.5;
-// start_y = 0;
+a = 0.2;
+dt = 0.1;
+n = 10000;
+start_x = 0.1;
+start_y = 0;
 
 //build();
 
-//setInterval(build,50);
+setInterval(build,50);
 
 // var oxy = new Oxy({length:1},{length:1});
 // 	oxy.create('graph','cvs',1000);
