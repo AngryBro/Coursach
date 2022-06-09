@@ -89,6 +89,31 @@ function build(cases) {
 	}
 }
 
+function build2(cases) {
+	cases = 1;
+	for(var i in arguments) {
+		arguments[i] = Number(arguments[i]);
+	}
+	var points = cases?eulerPolar1(start_x,start_y,dt,n,a,gr):eulerPolar1(start_x,start_y,dt,n,a,fr);
+	points = polar_to_decart(points);
+	var len = 0.5;
+	var size = 1000;
+	var oxy = new Oxy({length:len},{length:len});
+	oxy.create('graph1','cvs1',size);
+	oxy.plot(points);
+	var da = 0.001;
+	a_field.innerHTML = 'a = '+Math.round(a*1000)/1000;
+	if(flag) {
+		a-=da;
+	}
+	else {
+		a+=da;
+	}
+	if(Math.abs(a)>=0.2) {
+		flag = !flag;
+	}
+}
+
 var a,dt,n,start_x,start_y,flag = false;
 var a_field = document.getElementById('a');
 
@@ -99,6 +124,7 @@ start_x = 0.1;
 start_y = 0;
 
 setInterval(build,40);
+setInterval(build2,40);
 
 // var oxy = new Oxy({length:1},{length:1});
 // 	oxy.create('graph','cvs',1000);
